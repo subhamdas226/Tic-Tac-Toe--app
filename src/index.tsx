@@ -1,35 +1,23 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View } from "react-native";
-import { Home, Game } from "@screens";
-import {
-  useFonts,
-  DeliusUnicase_400Regular,
-  DeliusUnicase_700Bold,
-} from "@expo-google-fonts/delius-unicase";
-import { Text } from "@components";
-import React from "react";
-import AppLoading from "expo-app-loading";
+import { Text, AppBootstrap } from "@components";
+import Navigator from "@config/Navigator";
+import { ReactElement } from "react";
+import SettingsContext, { useSettings, SettingsProvider } from "@contexts/settings-context";
+import { Amplify } from 'aws-amplify';
+import awsExports from '../aws-exports';
+Amplify.configure(awsExports);
 
-export default function App() {
-  const [fontLoaded]: any = useFonts({
-    DeliusUnicase_400Regular,
-    DeliusUnicase_700Bold,
-  });
-  if (!fontLoaded) return <AppLoading />;
+export default function App() : ReactElement {
+  
   return (
-    <View style={styles.container}>
-      {/* <Text>Open up App.tsx to start working on your app!</Text>
-       */}
-      <Text
-        onPress={() => {
-          alert(true);
-        }}
-        weight="700"
-        style={{fontSize : 25}}
-      >
-        this is app
-      </Text>
-    </View>
+    <AppBootstrap>
+      <SettingsProvider>
+        <Navigator />
+      </SettingsProvider>
+      
+    </AppBootstrap>
+    
   );
 }
 
